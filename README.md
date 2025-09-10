@@ -651,3 +651,6 @@ python render.py \
 ![image-20250701101843483](/Users/zhangao/Library/Application Support/typora-user-images/image-20250701101843483.png)
 
 ![image-20250701102027420](/Users/zhangao/Library/Application Support/typora-user-images/image-20250701102027420.png)
+
+# 9.10接入 VGGT 增强点云初始化
+## model: VGGT 1B 版本，预训练模型
