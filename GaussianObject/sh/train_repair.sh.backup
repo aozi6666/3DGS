@@ -14,17 +14,17 @@
 # data.json_path: refined_cams.json 路径
 # system.sh_degree: 球谐函数阶数
 
-python train_repair.py \
+CUDA_VISIBLE_DEVICES=6  python train_repair.py \
     --config configs/gaussian-object-colmap-free.yaml \
     --train --gpu 0 \
-    tag="cuc" \
-    system.init_dreamer="output/gs_init/cuc" \
-    system.exp_name="output/controlnet_finetune/cuc" \
+    tag="kitchen" \
+    system.init_dreamer="output/gs_init/kitchen" \
+    system.exp_name="output/controlnet_finetune/kitchen" \
     system.refresh_size=8 \
-    data.data_dir="data/realcap/cuc" \
+    data.data_dir="data/mip360/kitchen" \
     data.resolution=8 \
-    data.sparse_num=4 \
-    data.prompt="a photo of a xxy5syt00" \
-    data.json_path="output/gs_init/cuc/refined_cams.json" \
+    data.sparse_num=9 \
+    data.prompt="a photo of a kitchen" \
+    data.json_path="output/gs_init/kitchen/refined_cams.json" \
     data.refresh_size=8 \
     system.sh_degree=2
