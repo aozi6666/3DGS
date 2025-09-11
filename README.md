@@ -654,3 +654,4 @@ python render.py \
 
 # 9.10接入 VGGT 增强点云初始化
 ## model: VGGT 1B 版本，预训练模型
+https://huggingface.co/facebook/VGGT-1B
