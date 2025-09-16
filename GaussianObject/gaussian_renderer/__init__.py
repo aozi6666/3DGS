@@ -16,7 +16,7 @@ from diff_gaussian_rasterization_w_pose import GaussianRasterizationSettings as 
 from scene.gaussian_model import GaussianModel
 from utils.sh_utils import eval_sh
 
-def render(viewpoint_camera, pc : GaussianModel, pipe, bg_color : torch.Tensor, scaling_modifier = 1.0, override_color = None):
+def render(viewpoint_camera, pc : GaussianModel, pipe, bg_color : torch.Tensor, scaling_modifier = 1.0, override_color = None, is_train=False, iteration=None, drop_rate=0.0):
     """
     Render the scene. 
     
@@ -142,6 +142,21 @@ def render_w_pose(viewpoint_camera, pc : GaussianModel, pipe, bg_color : torch.T
     means3D = pc.get_xyz
     means2D = screenspace_points
     opacity = pc.get_opacity
+
+    #### 9.16 集成DropGaussian #####
+    # DropGaussian implementation
+    if is_train and drop_rate > 0:
+        # Create initial compensation factor (1 for each Gaussian)
+        compensation = torch.ones(opacity.shape[0], dtype=torch.float32, device="cuda")
+        
+        # Apply DropGaussian with compensation
+        d = torch.nn.Dropout(p=drop_rate)
+        compensation = d(compensation)
+        
+        # Apply to opacity
+        opacity = opacity * compensation[:, None]
+    #### 9.16 集成DropGaussian #####
+
 
     # If precomputed 3d covariance is provided, use it. If not, then it will be computed from
     # scaling / rotation by the rasterizer.
